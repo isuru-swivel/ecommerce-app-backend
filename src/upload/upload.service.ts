@@ -20,7 +20,7 @@ export class UploadService {
 
   async uploadFile(file: Express.Multer.File): Promise<string> {
     try {
-      this.logger.log('Upload file to s3', file.originalname);
+      this.logger.log(`Upload file to s3 ${file.originalname}`);
 
       //generate unique key for file
       const id = nanoid();

@@ -10,6 +10,7 @@ import { UploadModule } from '../upload/upload.module';
     MongooseModule.forFeature([{ name: Craft.name, schema: CraftSchema }]),
     UploadModule,
   ],
+  exports: [CraftService],
   controllers: [CraftController],
   providers: [CraftService],
 })

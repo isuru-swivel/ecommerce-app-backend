@@ -28,7 +28,7 @@ export class CraftService {
     }
   }
 
-  async getCraftById(id: string) {
+  async getCraftById(id: string): Promise<Craft> {
     try {
       this.logger.log(`Get one craft with id ${id}`);
       const craft = await this.craftModel.findById(id).exec();
@@ -42,7 +42,10 @@ export class CraftService {
     }
   }
 
-  async addCraft(createCraftDto: CreateCraftDto, image: Express.Multer.File) {
+  async addCraft(
+    createCraftDto: CreateCraftDto,
+    image: Express.Multer.File,
+  ): Promise<Craft> {
     try {
       this.logger.log('Create a craft', JSON.stringify(createCraftDto));
 
@@ -64,7 +67,7 @@ export class CraftService {
     id: string,
     updateCraftDto: CreateCraftDto,
     image: Express.Multer.File,
-  ) {
+  ): Promise<Craft> {
     try {
       this.logger.log(`Update a craft with id ${id}`);
 
@@ -94,7 +97,7 @@ export class CraftService {
     }
   }
 
-  async deleteCraft(id: string) {
+  async deleteCraft(id: string): Promise<void> {
     try {
       this.logger.log(`Delete a craft with id ${id}`);
 
@@ -105,6 +108,22 @@ export class CraftService {
       return;
     } catch (e) {
       this.logger.error('Delete a craft error', e.message);
+      throw new HttpException(e.message, e.status);
+    }
+  }
+
+  updateStock(id: string, quantity: number) {
+    try {
+      this.logger.log(`Update stock of craft with id ${id}`);
+
+      //get craft by id and update stock
+      return this.craftModel.findByIdAndUpdate(
+        id,
+        { $inc: { stock: -quantity } },
+        { new: true },
+      );
+    } catch (e) {
+      this.logger.error('Update stock of craft error', e.message);
       throw new HttpException(e.message, e.status);
     }
   }
