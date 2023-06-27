@@ -86,7 +86,6 @@ export class CraftService {
     if (!craft) {
       throw new NotFoundException('Craft not found');
     }
-    return;
   }
 
   updateStock(id: string, quantity: number) {

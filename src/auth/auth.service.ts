@@ -55,7 +55,7 @@ export class AuthService {
 
   async validateUser(payload: any) {
     const { username, sub } = payload;
-    return this.userModel
+    return await this.userModel
       .findOne({ _id: sub, username })
       .select('-password')
       .exec();
