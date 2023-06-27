@@ -1,15 +1,8 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { OrderItem } from './orderItem.schema';
 
-// const orderItemSchema = new mongoose.Schema({
-//   craft: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'Craft',
-//   },
-//   quantity: Number,
-// });
-
-@Schema()
+@Schema({ timestamps: true })
 export class Order {
   @Prop({ required: true })
   firstName: string;
@@ -24,25 +17,17 @@ export class Order {
   postalCode: string;
 
   @Prop({ required: true })
-  phoneNumber: number;
+  phoneNumber: string;
 
   @Prop({ required: true })
   email: string;
 
-  @Prop({ required: true })
-  orderItems: [
-    {
-      craft: {
-        type: mongoose.Schema.Types.ObjectId;
-        require: true;
-        ref: 'Craft';
-      };
-      quantity: {
-        type: number;
-        required: true;
-      };
-    },
-  ];
+  @Prop({
+    required: true,
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'OrderItem',
+  })
+  orderItems: [OrderItem];
 
   @Prop({ required: true })
   orderTotal: number;

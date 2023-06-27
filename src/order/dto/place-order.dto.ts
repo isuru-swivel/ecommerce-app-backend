@@ -6,7 +6,7 @@ import {
   IsPhoneNumber,
 } from 'class-validator';
 
-interface OrderItem {
+export interface OrderItem {
   craft: string;
   quantity: number;
 }
@@ -30,14 +30,14 @@ export class PlaceOrderDto {
 
   @IsNotEmpty()
   @IsPhoneNumber('LK')
-  phoneNumber: number;
+  phoneNumber: string;
 
   @IsNotEmpty()
   @IsEmail()
   email: string;
 
   @IsNotEmpty()
-  orderItems: [OrderItem];
+  orderItems: OrderItem[];
 
   @IsNotEmpty()
   @IsNumber()

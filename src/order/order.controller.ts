@@ -1,26 +1,25 @@
-import { Get, Body, Post, Controller, HttpException } from '@nestjs/common';
+import { Get, Body, Post, UseGuards, Controller } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { PlaceOrderDto } from './dto/place-order.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Get()
-  getAllOrders() {
-    try {
-      return this.orderService.getAllOrders();
-    } catch (e) {
-      throw new HttpException(e.message, e.status);
-    }
+  @UseGuards(AuthGuard('jwt'))
+  async getAllOrders() {
+    return await this.orderService.getAllOrders();
   }
 
   @Post()
-  placeOrder(@Body() placeOrderDto: PlaceOrderDto) {
-    try {
-      return this.orderService.placeOrder(placeOrderDto);
-    } catch (e) {
-      throw new HttpException(e.message, e.status);
-    }
+  async placeOrder(@Body() placeOrderDto: PlaceOrderDto) {
+    return await this.orderService.placeOrder(placeOrderDto);
+  }
+
+  @Get('/analytics')
+  async getAnalytics() {
+    return await this.orderService.getAnalytics();
   }
 }
