@@ -4,12 +4,7 @@ import { User } from './user.schema';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
-import {
-  Injectable,
-  Logger,
-  HttpException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -18,21 +13,6 @@ export class AuthService {
     @InjectModel(User.name) private userModel: Model<User>,
     private jwtService: JwtService,
   ) {}
-
-  async signUp(signUpDto: AuthCredentialDto) {
-    try {
-      this.logger.log('Sign up', JSON.stringify(signUpDto));
-
-      const salt = await bcrypt.genSalt();
-      signUpDto.password = await bcrypt.hash(signUpDto.password, salt);
-      const newUser = new this.userModel(signUpDto);
-      await newUser.save();
-      return;
-    } catch (e) {
-      this.logger.error('Sign up error', e.message);
-      throw new HttpException(e.message, e.status);
-    }
-  }
 
   async signIn(signInDto: AuthCredentialDto) {
     this.logger.log(`Signing in ${signInDto.username}`);
