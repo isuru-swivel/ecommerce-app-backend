@@ -4,6 +4,8 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './global-exception.filter';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
+const port = process.env.PORT || 3001;
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api'); //Set prefix
@@ -32,8 +34,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);
 
-  await app.listen(3001);
-  Logger.log(`Server is running on port 3001`);
+  await app.listen(port);
+  Logger.log(`Server is running on port ${port}`);
 }
 
 bootstrap();
