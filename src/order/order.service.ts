@@ -9,6 +9,7 @@ import { Model } from 'mongoose';
 @Injectable()
 export class OrderService {
   private readonly logger = new Logger(OrderService.name);
+
   constructor(
     @InjectModel(Order.name) private orderModel: Model<Order>,
     @InjectModel(OrderItem.name) private orderItemModel: Model<OrderItem>,
