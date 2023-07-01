@@ -2,11 +2,11 @@
 
 ## Instructions
 
-###                    * Clone the repository
+###                     * Clone the repository
 
-###                    * Create a file called .env in the root directory
+###                     * Create a file called .env in the root directory
 
-###                    * Add below environemnt variables
+###                     * Add below environemnt variables
 
 ```
 MONGODB_URI=
@@ -16,25 +16,25 @@ AWS_S3_SECRET_ACCESS_KEY=
 JWT_SECRET=
 ```
 
-###                    * To install dependencies
+###                     * To install dependencies
 
 ```bash
 npm install
 ```
 
-###                    * To run the app
+###                     * To run the app
 
 ```bash
 npm run start:dev
 ```
 
-###                    * To run unit test
+###                     * To run unit test
 
 ```bash
 npm run test 
 ```
 
-###       * Swagger documentation
+###        * Swagger documentation
 
 ````
 http://localhost:3001/api-docs
@@ -46,4 +46,6 @@ http://localhost:3001/api-docs
 
 #### MongoDB
 
-#### Passport.js 
+#### Passport.js
+
+#### AWS S3
