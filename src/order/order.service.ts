@@ -69,13 +69,19 @@ export class OrderService {
 
     const orders = await this.getAllOrders();
 
+    //calculate total sales
     const totalSales = orders.reduce((a, b) => a + b.orderTotal, 0);
+
+    //total orders
     const totalOrders = orders.length;
+
+    //total crafts sold
     const totalCraftsSold = orders.reduce(
       (a, b) => a + b.orderItems.reduce((a, b) => a + b.quantity, 0),
       0,
     );
 
+    //craft sold count with craft name
     const craftsSoldCount = Object.entries(
       orders.reduce((acc, order) => {
         order.orderItems.forEach((item) => {
@@ -87,6 +93,7 @@ export class OrderService {
       }, {}),
     ).map(([name, quantity]) => ({ name, quantity }));
 
+    //sor by sold count
     craftsSoldCount.sort(
       (
         a: { name: string; quantity: number },
@@ -94,6 +101,7 @@ export class OrderService {
       ) => b.quantity - a.quantity,
     );
 
+    //get most sold items (top 5)
     const topFiveCraftsSold = craftsSoldCount.slice(0, 5);
 
     return {
